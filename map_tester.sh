@@ -4,6 +4,7 @@ if [ ! -f Makefile ]; then
 fi
 echo "[INFO]make bsq"
 rm -f bsq
+rm -rf results
 make fclean && make re && make clean
 if [ -f bsq ]; then
 	echo "[INFO]Binary was found!"
