@@ -39,6 +39,8 @@ do
 			diff -s tmp maps/mouli_maps_solved/$name >> diff
 			if [ $? -eq 0 ]; then
 				echo "[SUCCESS] The map printed was correct!" >> results/$name
+				echo $name >> results/trace
+				echo "    [SUCCESS] The map printed was correct!" >> results/trace
 			else
 				echo -e "[FAILURE] The map printed was incorrect!\nExpected:\n" >> results/$name
 				cat maps/mouli_maps_solved/$name >> results/$name
@@ -46,14 +48,24 @@ do
 				cat tmp >> results/$name
 				echo -e "\n\nDifference:\n" >> results/$name
 				cat diff >> results/$name
+				echo $name >> results/trace
+				echo -e "    [FAILURE] The map printed was incorrect!\nDifference:\n" >> results/trace
+				cat diff >> results/trace
+				echo "    For more infos see file trace."
 			fi
 			rm -f diff
 		else if [ $? -eq 84 ]; then
 			echo "[FAILURE] bsq return with code 84 (0 expected)" >> results/$name
+			echo $name >> results/trace
+			echo "    [FAILURE] bsq return with code 84 (0 expected)" >> results/trace
 		else if [ $? -eq 139 ]; then
 			echo "[FAILURE] SEGMENTATION FAULT (core dumped)" >> results/$name
+			echo $name >> results/trace
+			echo "    [FAILURE] SEGMENTATION FAULT (core dumped)" >> results/trace
 		else
 			echo -e "[WTF] Wtf did you do bro? I don't know this return type value!\nSuch noob wow" >> results/$name
+			echo $name >> results/trace
+			echo "    [WTF] Wtf did you do bro? I don't know this return type value!\nSuch noob wow" >> results/trace
 		fi
 		fi
 		fi
