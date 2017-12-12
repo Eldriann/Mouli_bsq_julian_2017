@@ -26,6 +26,7 @@ else
 fi
 echo "[INFO]Starting tests:"
 mkdir results
+echo -e "-----TRACE BSQ-----\n\n" >> results/trace 
 for entry in maps/mouli_maps/*
 do
 	name="${entry##*/}"
@@ -40,7 +41,7 @@ do
 			if [ $? -eq 0 ]; then
 				echo "[SUCCESS] The map printed was correct!" >> results/$name
 				echo $name >> results/trace
-				echo "    [SUCCESS] The map printed was correct!" >> results/trace
+				echo -e "    [SUCCESS] The map printed was correct!\n" >> results/trace
 			else
 				echo -e "[FAILURE] The map printed was incorrect!\nExpected:\n" >> results/$name
 				cat maps/mouli_maps_solved/$name >> results/$name
@@ -51,21 +52,21 @@ do
 				echo $name >> results/trace
 				echo -e "    [FAILURE] The map printed was incorrect!\nDifference:\n" >> results/trace
 				cat diff >> results/trace
-				echo "    For more infos see file trace."
+				echo -e "    For more infos see file trace.\n" >> results/trace
 			fi
 			rm -f diff
 		else if [ $? -eq 84 ]; then
 			echo "[FAILURE] bsq return with code 84 (0 expected)" >> results/$name
 			echo $name >> results/trace
-			echo "    [FAILURE] bsq return with code 84 (0 expected)" >> results/trace
+			echo -e "    [FAILURE] bsq return with code 84 (0 expected)\n" >> results/trace
 		else if [ $? -eq 139 ]; then
 			echo "[FAILURE] SEGMENTATION FAULT (core dumped)" >> results/$name
 			echo $name >> results/trace
-			echo "    [FAILURE] SEGMENTATION FAULT (core dumped)" >> results/trace
+			echo -e "    [FAILURE] SEGMENTATION FAULT (core dumped)\n" >> results/trace
 		else
 			echo -e "[WTF] Wtf did you do bro? I don't know this return type value!\nSuch noob wow" >> results/$name
 			echo $name >> results/trace
-			echo "    [WTF] Wtf did you do bro? I don't know this return type value!\nSuch noob wow" >> results/trace
+			echo -e "    [WTF] Wtf did you do bro? I don't know this return type value!\nSuch noob wow\n" >> results/trace
 		fi
 		fi
 		fi
